@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react/cjs/react.development";
 import "./ExpenseForm.css";
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState(" ");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
+ 
   const titleChangeHandler = (event) => {
     // console.log(event);//event have target property
     //target contains current entered value
@@ -12,7 +13,7 @@ const ExpenseForm = () => {
     // console.log(event.target.value);
     setEnteredTitle(event.target.value);
   };
-
+ 
   const amountChangeHandler = (event) => {
     setEnteredAmount(event.target.value);
   };
@@ -23,22 +24,24 @@ const ExpenseForm = () => {
 
   const submitChangeHandler = (event) => {
     event.preventDefault();
-    console.log(event);
+    // console.log(event);
 
-    const expenseDate = {
+    const expenseData = {
       title: enteredTitle,
       amount: enteredAmount,
       date: enteredDate,
     };
-    console.log(expenseDate);
+    // console.log(expenseData);
     //sets the state to empty string(our initial state) after submitting 
-    setEnteredTitle("");
+    props.onSaveExpenseData(expenseData) 
+     
+    setEnteredTitle(""); 
     setEnteredAmount("");
     setEnteredDate("");
   };
 
   return (
-    <div>
+    
       <form onSubmit={submitChangeHandler}>
         <div className="new-expense__controls">
           <div className="new-expense__control">
@@ -76,7 +79,7 @@ const ExpenseForm = () => {
           <button type="submit">Add Expense</button>
         </div>
       </form>
-    </div>
+   
   );
 };
 export default ExpenseForm;
