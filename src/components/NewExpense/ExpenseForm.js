@@ -29,8 +29,8 @@ const ExpenseForm = (props) => {
 
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
-      date: enteredDate,
+      amount: +enteredAmount,
+      date: new Date(enteredDate),
     };
     // console.log(expenseData);
     //sets the state to empty string(our initial state) after submitting 
