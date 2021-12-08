@@ -11,12 +11,26 @@ const Expenses = (props) => {
     setFilterYear(selectedYear);
   };
 
-  console.log();
-  const filteredExpense = props.items.filter(expense => {
+  const filteredExpense = props.items.filter((expense) => {
     //filter return new arry original array isn't tocuhed
-    console.log(16,expense.date);
-    return expense.date.getFullYear().toString() === filterYear
-  })
+    return expense.date.getFullYear().toString() === filterYear;
+  });
+
+    //intially expenseContent is this
+  let expenseContent = <p>No Expense found</p>;
+    
+  if (filteredExpense.length > 0) {
+    //if length of filtered expense is  > 0 
+    // console.log("filterdexp::",filteredExpense);
+    expenseContent = filteredExpense.map((expense) => (
+      <ExpenseItem
+        key={expense.id} //key helps to identofy individual item
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      />
+    ));
+  }
 
   return (
     <div>
@@ -25,15 +39,8 @@ const Expenses = (props) => {
           selected={filterYear}
           onChangeFilter={filterChangeHandler}
         />
-      
-        {filteredExpense.map((expense) => ( // map takes function as an argument and that takes the old array and returns new array with modification
-          <ExpenseItem
-            key = {expense.id} //key helps to identofy individual item
-            title={expense.title}
-            amount={expense.amount}
-            date={expense.date}
-          />
-        ))}
+       
+        {expenseContent}
       </Card>
     </div>
   );
